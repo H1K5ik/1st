@@ -7,7 +7,7 @@ exports.HTTP_STATUSES = exports.availableResolutionsType = exports.app = void 0;
 const express_1 = __importDefault(require("express"));
 const UpdateVideoInputModel_1 = require("./models/UpdateVideoInputModel");
 exports.app = (0, express_1.default)();
-const port = 3000;
+const port = 4000;
 const jsonBodyMiddleware = express_1.default.json();
 exports.app.use(jsonBodyMiddleware);
 var availableResolutionsType;
@@ -25,6 +25,10 @@ const currentDate = new Date();
 currentDate.setDate(currentDate.getDate() + 1);
 const tomorrowISOString = currentDate.toISOString();
 console.log(tomorrowISOString);
+function addDays(date, n) {
+    date.setDate(new Date().getDate() + n);
+    return date;
+}
 let defaultVideo = [
     {
         id: 1,
@@ -32,8 +36,8 @@ let defaultVideo = [
         author: 'Gabeasdssllasdasdsdaf',
         canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt: currentDate.toISOString(),
-        publicationDate: tomorrowISOString,
+        createdAt: new Date().toISOString(),
+        publicationDate: addDays(new Date(), 1).toISOString(),
         availableResolutions: availableResolutionsType.P144
     }
 ];
@@ -85,7 +89,7 @@ exports.app.post('/videos', (req, res) => {
         canBeDownloaded: false,
         minAgeRestriction: null,
         createdAt: new Date().toISOString(),
-        publicationDate: new Date().toISOString(),
+        publicationDate: addDays(new Date(), 1).toISOString(),
         availableResolutions: req.body.availableResolutions
     };
     defaultVideo.push(video);

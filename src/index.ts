@@ -2,7 +2,7 @@ import express, {Request, Response} from 'express'
 import {UpdateVideoInputModelOk} from "./models/UpdateVideoInputModel";
 
 export const app = express()
-const port = 3000
+const port = 4000
 const jsonBodyMiddleware = express.json()
 app.use(jsonBodyMiddleware)
 export enum availableResolutionsType {
@@ -31,7 +31,7 @@ currentDate.setDate(currentDate.getDate() + 1);
 const tomorrowISOString = currentDate.toISOString();
 console.log(tomorrowISOString);
 function addDays(date:Date, n:number){
-    date.setDate(date.getDate() + n);
+    date.setDate(new Date().getDate() + n);
     return date
 }
 let defaultVideo: dbVideoType[] = [
@@ -96,8 +96,8 @@ app.post('/videos', (req:Request, res: Response) => {
         author: req.body.author,
         canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt: new Date().toISOString(),
-        publicationDate: new Date().toISOString(),
+        createdAt :new Date().toISOString(),
+        publicationDate: addDays(new Date(), 1).toISOString(),
         availableResolutions: req.body.availableResolutions
     };
     defaultVideo.push(video)

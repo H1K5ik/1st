@@ -52,10 +52,10 @@ function dbVideoTypeMinAgeRestriction(minAgeRestriction) {
     return minAgeRestriction >= 1 && minAgeRestriction <= 18;
 }
 const InputModelTitleOk = (title) => {
-    return title.length <= 40 && title != null;
+    return title.length <= 40 && title != 'null' && title != '' && true;
 };
 const InputModelAuthorOk = (author) => {
-    return author.length <= 20 && author != null;
+    return author.length <= 20 && author != 'null' && author != '' && true;
 };
 exports.app.get('/', (req, res) => {
     res.send('Hellosad World!');
@@ -64,7 +64,7 @@ exports.app.get('/videos', (req, res) => {
     res.status(exports.HTTP_STATUSES.OK_200).send(defaultVideo);
 });
 exports.app.post('/videos', (req, res) => {
-    if (InputModelTitleOk(req.body.title)) {
+    if (!InputModelTitleOk(req.body.title)) {
         res.status(exports.HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
                     message: "Incorrect title",
@@ -73,7 +73,7 @@ exports.app.post('/videos', (req, res) => {
         });
         return;
     }
-    if (InputModelAuthorOk(req.body.author)) {
+    if (!InputModelAuthorOk(req.body.author)) {
         res.status(exports.HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
                     message: "Incorrect author",
@@ -104,7 +104,7 @@ exports.app.get('/videos/:id', (req, res) => {
     res.status(exports.HTTP_STATUSES.OK_200).send(gg);
 });
 exports.app.put('/videos/:id', (req, res) => {
-    if ((0, UpdateVideoInputModel_1.UpdateVideoInputModelOk)(req.body.title, req.body.author, req.body.minAgeRestriction)) {
+    if (!(0, UpdateVideoInputModel_1.UpdateVideoInputModelOk)(req.body.title, req.body.author, req.body.minAgeRestriction)) {
         res.status(exports.HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
                     message: "Incorrect title",

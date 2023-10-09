@@ -72,11 +72,20 @@ app.get('/videos', (req: Request, res: Response) => {
     res.status(HTTP_STATUSES.OK_200).send(defaultVideo)
 })
 app.post('/videos', (req:Request, res: Response) => {
-    if (!UpdateVideoInputModelOk(req.body.title, req.body.author, req.body.minAgeRestriction)) {
+    if (!InputModelTitleOk(req.body.title)) {
         res.status(HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
                 message: "Incorrect title",
                 field: "titlss"
+            }]
+        })
+        return;
+    }
+    if (!InputModelAuthorOk(req.body.author)) {
+        res.status(HTTP_STATUSES.BAD_REQUEST_400).send({
+            errorsMessages: [{
+                message: "Incorrect author",
+                field: "titless"
             }]
         })
         return;

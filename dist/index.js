@@ -75,8 +75,7 @@ exports.app.post('/videos', (req, res) => {
         });
     }
     for (let i = 0; i < arrayOfAvRes.length; i++) {
-        let res = req.body.availableResolutions;
-        if (!res && !res.trim() && !(arrayOfAvRes[i] === res)) {
+        if (!availableResolutions && !availableResolutions.trim() && !(arrayOfAvRes[i] === availableResolutions)) {
             errorsMessages.push({
                 message: "Incorrect title",
                 field: "availableResolutions"
@@ -131,7 +130,7 @@ exports.app.put('/videos/:id', (req, res) => {
         });
     }
     for (let i = 0; i < arrayOfAvRes.length; i++) {
-        if (!availableResolutions || !availableResolutions.trim() || !(arrayOfAvRes[i] === availableResolutions)) {
+        if (!availableResolutions && !availableResolutions.trim() && !(arrayOfAvRes[i] === availableResolutions)) {
             errorsMessages.push({
                 message: "Incorrect title",
                 field: "availableResolutions"

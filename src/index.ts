@@ -194,7 +194,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
     if (!age || typeof age !== 'number' || !(age >= 1) || !(age <= 18)) {
         errorsMessages.push({
             message: "Incorrect title",
-            field: "age"
+            field: "minAgeRestriction"
         })
     }
     if (!can || typeof can !== 'boolean') {

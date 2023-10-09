@@ -14,6 +14,12 @@ describe('.course',() => {
                 "availableResolutions": [
                     "P144"
                 ]})
-            .expect(HTTP_STATUSES.CREATED_201)
+            .expect(HTTP_STATUSES.CREATED_201,{
+                "title": "string",
+                "author": "string",
+                "availableResolutions": [
+                    "P144"
+                ]
+            })
     })
 })

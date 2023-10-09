@@ -8,14 +8,14 @@ const port = 3000
 const jsonBodyMiddleware = express.json()
 app.use(jsonBodyMiddleware)
 export enum availableResolutionsType {
-    P144 = 'P144',
-    P240 = 'P240',
-    P360 = 'P360',
-    P480 = 'P480',
-    P720 = 'P720',
-    P1080 = 'P1080',
-    P1440 = 'P1440',
-    P2160 = 'P2160'
+    P144 = "P144",
+    P240 = "P240",
+    P360 = "P360",
+    P480 = "P480",
+    P720 = "P720",
+    P1080 = "P1080",
+    P1440 = "P1440",
+    P2160 = "P2160"
 }
 
 type dbVideoType = {
@@ -79,7 +79,7 @@ app.post('/videos', (req:Request, res: Response) => {
         res.status(HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
                 message: "Incorrect author",
-                field: "title"
+                field: "titless"
             }]
         })
         return;

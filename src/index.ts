@@ -102,7 +102,7 @@ app.post('/videos', (req: Request, res: Response) => {
             if ( typeof availableResolution[m] !== 'string') {
                 errorsMessages.push({
                     message: "Incorrect title",
-                    field: `availableResolutions ${availableResolution[m]}`
+                    field: `availableResolutions`
                 })
             }
             if (arrayOfAvRes[i] === availableResolution[m]) {
@@ -113,7 +113,7 @@ app.post('/videos', (req: Request, res: Response) => {
     if (  c < availableResolution.length  ) {
         errorsMessages.push({
             message: "Incorrect title",
-            field: `availableResolutions is Invalid`
+            field: `availableResolutions`
         })
     }
     //TODO: validate availableResolution
@@ -177,7 +177,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             if ( typeof availableResolution[m] !== 'string') {
                 errorsMessages.push({
                     message: "Incorrect title",
-                    field: `availableResolutions ${availableResolution[m]}`
+                    field: `availableResolutions`
                 })
             }
             if (arrayOfAvRes[i] === availableResolution[m]) {
@@ -188,7 +188,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
     if (  c < availableResolution.length  ) {
         errorsMessages.push({
             message: "Incorrect title",
-            field: `availableResolutions is Invalid`
+            field: `availableResolutions`
         })
     }
     if (!age || typeof age !== 'number' || !(age >= 1) || !(age <= 18)) {

@@ -19,17 +19,15 @@ var availableResolutionsType;
     availableResolutionsType["P1440"] = "P1440";
     availableResolutionsType["P2160"] = "P2160";
 })(availableResolutionsType || (exports.availableResolutionsType = availableResolutionsType = {}));
-const defDate = new Date();
-defDate.setDate((defDate.getDate() + 1));
 let defaultVideo = [
     {
         id: 1,
-        title: 'asdasdas',
-        author: 'Gabellf',
+        title: 'asdasdasddasas',
+        author: 'Gabeasdsllf',
         canBeDownloaded: false,
         minAgeRestriction: null,
         createdAt: new Date().toISOString(),
-        publicationDate: defDate.toISOString(),
+        publicationDate: new Date().toISOString(),
         availableResolutions: availableResolutionsType.P144
     }
 ];
@@ -81,7 +79,7 @@ app.post('/videos', (req, res) => {
         canBeDownloaded: false,
         minAgeRestriction: null,
         createdAt: new Date().toISOString(),
-        publicationDate: defDate.toISOString(),
+        publicationDate: new Date().toISOString(),
         availableResolutions: req.body.availableResolutions
     };
     defaultVideo.push(video);

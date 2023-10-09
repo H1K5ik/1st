@@ -58,7 +58,7 @@ app.post('/videos', (req, res) => {
         res.status(exports.HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
                     message: "Incorrect title",
-                    field: "title"
+                    field: "titlss"
                 }]
         });
         return;
@@ -127,7 +127,7 @@ app.delete('/videos/:id', (req, res) => {
 });
 app.delete('/testing/all-data', (req, res) => {
     defaultVideo = [];
-    res.status(exports.HTTP_STATUSES.NO_CONTENT_204);
+    res.sendStatus(exports.HTTP_STATUSES.NO_CONTENT_204);
 });
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

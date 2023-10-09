@@ -37,7 +37,7 @@ let defaultVideo: dbVideoType[] = [
         author: 'Gabeasdssllasdasdsdaf',
         canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt:currentDate.toISOString(),
+        createdAt:new Date().toISOString(),
         publicationDate: tomorrowISOString,
         availableResolutions: availableResolutionsType.P144
     }

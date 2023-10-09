@@ -3,9 +3,10 @@ import {CreateVideoInputModel} from "./models/CreateVideoInputModel";
 import {RequestsWithBody, RequestsWithParams} from "./types/types";
 import {UpdateVideoInputModelOk} from "./models/UpdateVideoInputModel";
 
-const app = express()
+export const app = express()
 const port = 3000
-
+const jsonBodyMiddleware = express.json()
+app.use(jsonBodyMiddleware)
 export enum availableResolutionsType {
     P144 = 'P144',
     P240 = 'P240',
@@ -64,7 +65,7 @@ app.get('/', (req, res) => {
 app.get('/videos', (req: Request, res: Response) => {
     res.status(HTTP_STATUSES.OK_200).send(defaultVideo)
 })
-app.post('/videos', (req: RequestsWithBody<CreateVideoInputModel>, res: Response) => {
+app.post('/videos', (req:Request, res: Response) => {
     if (!InputModelTitleOk(req.body.title)) {
         res.status(HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
@@ -83,8 +84,8 @@ app.post('/videos', (req: RequestsWithBody<CreateVideoInputModel>, res: Response
         })
         return;
     }
-    const video: dbVideoType = {
-        id: +new Date(),
+    let video: dbVideoType = {
+        id: +(new Date()),
         title: req.body.title,
         author: req.body.author,
         canBeDownloaded: false,
@@ -92,7 +93,7 @@ app.post('/videos', (req: RequestsWithBody<CreateVideoInputModel>, res: Response
         createdAt: new Date().toISOString(),
         publicationDate: new Date().toISOString(),
         availableResolutions: req.body.availableResolutions
-    }
+    };
     defaultVideo.push(video)
     res.status(HTTP_STATUSES.CREATED_201).send(video)
 })

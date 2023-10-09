@@ -173,13 +173,20 @@ exports.app.put('/videos/:id', (req, res) => {
     if (!age || typeof age !== 'number' || !(age >= 1) || !(age <= 18)) {
         errorsMessages.push({
             message: "Incorrect title",
-            field: "age"
+            field: "minAgeRestriction"
         });
     }
     if (!can || typeof can !== 'boolean') {
         errorsMessages.push({
             message: "Incorrect title",
             field: "canBeDownloaded"
+        });
+    }
+    const date = req.body.publicationDate;
+    if (!date || typeof date !== 'string') {
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: "publicationDate"
         });
     }
     //TODO: validate availableResolutions

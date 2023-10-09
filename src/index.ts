@@ -203,6 +203,13 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             field: "canBeDownloaded"
         })
     }
+    const date = req.body.publicationDate;
+    if (!date || typeof date !== 'string') {
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: "publicationDate"
+        })
+    }
     //TODO: validate availableResolutions
     //fapfolder
     if (errorsMessages.length) {

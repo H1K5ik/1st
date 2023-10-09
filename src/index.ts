@@ -60,10 +60,10 @@ function dbVideoTypeMinAgeRestriction(minAgeRestriction: number) {
 }
 
 const InputModelTitleOk = (title: string) => {
-    return title.length <= 40 && true
+    return title.length <= 40 && title != null
 }
 const InputModelAuthorOk = (author: string) => {
-    return author.length <= 20 && true
+    return author.length <= 20  && author != null
 }
 app.get('/', (req, res) => {
     res.send('Hellosad World!')
@@ -72,7 +72,7 @@ app.get('/videos', (req: Request, res: Response) => {
     res.status(HTTP_STATUSES.OK_200).send(defaultVideo)
 })
 app.post('/videos', (req:Request, res: Response) => {
-    if (!InputModelTitleOk(req.body.title)) {
+    if (InputModelTitleOk(req.body.title)) {
         res.status(HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
                 message: "Incorrect title",
@@ -81,7 +81,7 @@ app.post('/videos', (req:Request, res: Response) => {
         })
         return;
     }
-    if (!InputModelAuthorOk(req.body.author)) {
+    if (InputModelAuthorOk(req.body.author)) {
         res.status(HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
                 message: "Incorrect author",
@@ -113,7 +113,7 @@ app.get('/videos/:id', (req: Request, res: Response) => {
     res.status(HTTP_STATUSES.OK_200).send(gg)
 })
 app.put('/videos/:id', (req: Request, res: Response) => {
-    if (!UpdateVideoInputModelOk(req.body.title, req.body.author, req.body.minAgeRestriction)) {
+    if (UpdateVideoInputModelOk(req.body.title, req.body.author, req.body.minAgeRestriction)) {
         res.status(HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
                 message: "Incorrect title",

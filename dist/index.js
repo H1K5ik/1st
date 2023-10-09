@@ -48,9 +48,6 @@ exports.HTTP_STATUSES = {
     BAD_REQUEST_400: 400,
     NOT_FOUND_404: 404
 };
-function dbVideoTypeMinAgeRestriction(minAgeRestriction) {
-    return minAgeRestriction >= 1 && minAgeRestriction <= 18;
-}
 exports.app.get('/', (req, res) => {
     res.send('Hellosad World!');
 });
@@ -61,7 +58,7 @@ exports.app.post('/videos', (req, res) => {
     const errorsMessages = [];
     const title = req.body.title;
     const author = req.body.author;
-    const availableResolutions = req.body.availableResolutions; // []
+    const availableResolution = req.body.availableResolutions; // []
     if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
         errorsMessages.push({
             message: "Incorrect title",
@@ -74,15 +71,33 @@ exports.app.post('/videos', (req, res) => {
             field: "author"
         });
     }
+    let c = 0;
+    if (!availableResolution.length) {
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: `availableResolutions`
+        });
+    }
     for (let i = 0; i < arrayOfAvRes.length; i++) {
-        if (!availableResolutions && !availableResolutions.trim() && !(arrayOfAvRes[i] === availableResolutions)) {
-            errorsMessages.push({
-                message: "Incorrect title",
-                field: "availableResolutions"
-            });
+        for (let m = 0; m < availableResolution.length; m++) {
+            if (typeof availableResolution[m] !== 'string') {
+                errorsMessages.push({
+                    message: "Incorrect title",
+                    field: `availableResolutions ${availableResolution[m]}`
+                });
+            }
+            if (arrayOfAvRes[i] === availableResolution[m]) {
+                c++;
+            }
         }
     }
-    //TODO: validate availableResolutions
+    if (c < availableResolution.length) {
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: `availableResolutions is Invalid`
+        });
+    }
+    //TODO: validate availableResolution
     //fapfolder
     if (errorsMessages.length) {
         res.status(exports.HTTP_STATUSES.BAD_REQUEST_400).send({ errorsMessages });
@@ -114,28 +129,46 @@ exports.app.put('/videos/:id', (req, res) => {
     const errorsMessages = [];
     const title = req.body.title;
     const author = req.body.author;
-    const availableResolutions = req.body.availableResolutions; // []
+    const availableResolution = req.body.availableResolutions; // []
     const age = req.body.minAgeRestriction;
     const can = req.body.canBeDownloaded;
-    if (!title || typeof title !== 'string' || !title.trim() || !(title.length > 40)) {
+    if (!title || typeof title !== 'string' || !title.trim() || (title.length > 40)) {
         errorsMessages.push({
             message: "Incorrect title",
             field: "title"
         });
     }
-    if (!author || typeof author !== 'string' || !author.trim() || !(author.length > 20)) {
+    if (!author || typeof author !== 'string' || !author.trim() || (author.length > 20)) {
         errorsMessages.push({
             message: "Incorrect title",
             field: "author"
         });
     }
+    let c = 0;
+    if (!availableResolution.length) {
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: `availableResolutions`
+        });
+    }
     for (let i = 0; i < arrayOfAvRes.length; i++) {
-        if (!availableResolutions && !availableResolutions.trim() && !(arrayOfAvRes[i] === availableResolutions)) {
-            errorsMessages.push({
-                message: "Incorrect title",
-                field: "availableResolutions"
-            });
+        for (let m = 0; m < availableResolution.length; m++) {
+            if (typeof availableResolution[m] !== 'string') {
+                errorsMessages.push({
+                    message: "Incorrect title",
+                    field: `availableResolutions ${availableResolution[m]}`
+                });
+            }
+            if (arrayOfAvRes[i] === availableResolution[m]) {
+                c++;
+            }
         }
+    }
+    if (c < availableResolution.length) {
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: `availableResolutions is Invalid`
+        });
     }
     if (!age || typeof age !== 'number' || !(age >= 1) || !(age <= 18)) {
         errorsMessages.push({

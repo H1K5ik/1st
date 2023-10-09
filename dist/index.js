@@ -98,7 +98,7 @@ app.put('/videos/:id', (req, res) => {
         res.status(exports.HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
                     message: "Incorrect title",
-                    field: "title"
+                    field: "titles"
                 }]
         });
         return;

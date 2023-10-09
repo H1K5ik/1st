@@ -5,6 +5,7 @@ export const app = express()
 const port = 4000
 const jsonBodyMiddleware = express.json()
 app.use(jsonBodyMiddleware)
+
 export enum availableResolutionsType {
     P144 = "P144",
     P240 = "P240",
@@ -16,24 +17,28 @@ export enum availableResolutionsType {
     P2160 = "P2160"
 }
 
+const arrayOfAvRes = Object.values(availableResolutionsType)
+
 type dbVideoType = {
     id: number,
-    title: string | null,
-    author: string | null,
+    title: string,
+    author: string,
     canBeDownloaded?: boolean,
-    minAgeRestriction?: number | null,
-    createdAt?: string,
-    publicationDate?: string,
-    availableResolutions?: availableResolutionsType
+    minAgeRestriction: number | null,
+    createdAt: string,
+    publicationDate: string,
+    availableResolutions: availableResolutionsType
 }
 const currentDate = new Date();
 currentDate.setDate(currentDate.getDate() + 1);
 const tomorrowISOString = currentDate.toISOString();
 console.log(tomorrowISOString);
-function addDays(date:Date, n:number){
+
+function addDays(date: Date, n: number) {
     date.setDate(new Date().getDate() + n);
     return date
 }
+
 let defaultVideo: dbVideoType[] = [
     {
         id: 1,
@@ -41,11 +46,16 @@ let defaultVideo: dbVideoType[] = [
         author: 'Gabeasdssllasdasdsdaf',
         canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt :new Date().toISOString(),
+        createdAt: new Date().toISOString(),
         publicationDate: addDays(new Date(), 1).toISOString(),
         availableResolutions: availableResolutionsType.P144
     }
 ];
+
+type ValidationErrorType = {
+    message: string
+    field: string
+}
 
 export const HTTP_STATUSES = {
     OK_200: 200,
@@ -58,46 +68,57 @@ export const HTTP_STATUSES = {
 function dbVideoTypeMinAgeRestriction(minAgeRestriction: number) {
     return minAgeRestriction >= 1 && minAgeRestriction <= 18;
 }
-
-const InputModelTitleOk = (title: string) => {
-    return title.length <= 40  && title != '' && typeof title === 'object'
-}
-const InputModelAuthorOk = (author: string) => {
-    return author.length <= 20   && author != '' && typeof author === 'object'
-}
 app.get('/', (req, res) => {
     res.send('Hellosad World!')
 })
 app.get('/videos', (req: Request, res: Response) => {
     res.status(HTTP_STATUSES.OK_200).send(defaultVideo)
 })
-app.post('/videos', (req:Request, res: Response) => {
-    if (!InputModelTitleOk(req.body.title)) {
-        res.status(HTTP_STATUSES.BAD_REQUEST_400).send({
-            errorsMessages: [{
+
+
+app.post('/videos', (req: Request, res: Response) => {
+    const errorsMessages: ValidationErrorType[] = []
+    const title = req.body.title
+    const author = req.body.author
+    const availableResolutions = req.body.availableResolutions // []
+    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: "title"
+        })
+    }
+    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: "author"
+        })
+    }
+
+    for(let i = 0;i<arrayOfAvRes.length; i++){
+        let res = req.body.availableResolutions;
+        if(!res && !res.trim() && !(arrayOfAvRes[i]===res)){
+            errorsMessages.push({
                 message: "Incorrect title",
-                field: "titlss"
-            }]
-        })
-        return;
+                field: "availableResolutions"
+            })
+        }
     }
-    if (!InputModelAuthorOk(req.body.author)) {
-        res.status(HTTP_STATUSES.BAD_REQUEST_400).send({
-            errorsMessages: [{
-                message: "Incorrect author",
-                field: "titless"
-            }]
-        })
-        return;
+
+    //TODO: validate availableResolutions
+    //fapfolder
+    if (errorsMessages.length) {
+        res.status(HTTP_STATUSES.BAD_REQUEST_400).send({errorsMessages})
+        return
     }
-    let video: dbVideoType = {
-        id: +(new Date()),
-        title: req.body.title,
-        author: req.body.author,
+    const date = new Date()
+    const video: dbVideoType = {
+        id: +date,
+        title,
+        author,
         canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt :new Date().toISOString(),
-        publicationDate: addDays(new Date(), 1).toISOString(),
+        createdAt: date.toISOString(),
+        publicationDate: addDays(date, 1).toISOString(),
         availableResolutions: req.body.availableResolutions
     };
     defaultVideo.push(video)
@@ -113,15 +134,52 @@ app.get('/videos/:id', (req: Request, res: Response) => {
     res.status(HTTP_STATUSES.OK_200).send(gg)
 })
 app.put('/videos/:id', (req: Request, res: Response) => {
-    if (!UpdateVideoInputModelOk(req.body.title, req.body.author, req.body.minAgeRestriction)) {
-        res.status(HTTP_STATUSES.BAD_REQUEST_400).send({
-            errorsMessages: [{
-                message: "Incorrect title",
-                field: "stitles"
-            }]
+    const errorsMessages: ValidationErrorType[] = []
+    const title = req.body.title
+    const author = req.body.author
+    const availableResolutions = req.body.availableResolutions // []
+    const age = req.body.minAgeRestriction;
+    const can = req.body.canBeDownloaded;
+    if (!title || typeof title !== 'string' || !title.trim() || !(title.length > 40)) {
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: "title"
         })
-        return;
     }
+    if (!author || typeof author !== 'string' || !author.trim() || !(author.length > 20)) {
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: "author"
+        })
+    }
+
+    for(let i = 0;i<arrayOfAvRes.length; i++){
+        if(!availableResolutions || !availableResolutions.trim() || !(arrayOfAvRes[i]===availableResolutions)){
+            errorsMessages.push({
+                message: "Incorrect title",
+                field: "availableResolutions"
+            })
+        }
+    }
+    if(!age || typeof age !== 'number' || !(age>=1) || !(age<=18)){
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: "age"
+        })
+    }
+    if(!can || typeof can !== 'boolean'){
+        errorsMessages.push({
+            message: "Incorrect title",
+            field: "can"
+        })
+    }
+    //TODO: validate availableResolutions
+    //fapfolder
+    if (errorsMessages.length) {
+        res.status(HTTP_STATUSES.BAD_REQUEST_400).send({errorsMessages})
+        return
+    }
+
     const gg = defaultVideo.find(c => c.id === +req.params.id)
     if (!gg) {
         res.sendStatus(HTTP_STATUSES.NOT_FOUND_404)

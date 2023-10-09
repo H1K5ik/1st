@@ -137,7 +137,7 @@ app.delete('/videos/:id', (req: Request, res: Response) => {
     defaultVideo = defaultVideo.filter(c => c.id !== +req.params.id)
     res.status(HTTP_STATUSES.NO_CONTENT_204).send(gg)
 })
-app.delete('/all-data', (req: Request, res: Response) => {
+app.delete('/testing/all-data', (req: Request, res: Response) => {
     defaultVideo = []
     res.status(HTTP_STATUSES.NO_CONTENT_204)
 })

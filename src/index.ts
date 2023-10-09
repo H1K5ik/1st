@@ -110,7 +110,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         res.status(HTTP_STATUSES.BAD_REQUEST_400).send({
             errorsMessages: [{
                 message: "Incorrect title",
-                field: "title"
+                field: "titles"
             }]
         })
         return;

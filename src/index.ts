@@ -60,10 +60,10 @@ function dbVideoTypeMinAgeRestriction(minAgeRestriction: number) {
 }
 
 const InputModelTitleOk = (title: string) => {
-    return title.length <= 40 && title != 'null' && title != '' && true
+    return title.length <= 40  && title != '' && typeof title === 'object'
 }
 const InputModelAuthorOk = (author: string) => {
-    return author.length <= 20  && author != 'null' && author != '' && true
+    return author.length <= 20   && author != '' && typeof author === 'object'
 }
 app.get('/', (req, res) => {
     res.send('Hellosad World!')

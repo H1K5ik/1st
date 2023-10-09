@@ -52,10 +52,10 @@ function dbVideoTypeMinAgeRestriction(minAgeRestriction) {
     return minAgeRestriction >= 1 && minAgeRestriction <= 18;
 }
 const InputModelTitleOk = (title) => {
-    return title.length <= 40 && title != 'null' && title != '' && true;
+    return title.length <= 40 && title != '' && typeof title === 'object';
 };
 const InputModelAuthorOk = (author) => {
-    return author.length <= 20 && author != 'null' && author != '' && true;
+    return author.length <= 20 && author != '' && typeof author === 'object';
 };
 exports.app.get('/', (req, res) => {
     res.send('Hellosad World!');

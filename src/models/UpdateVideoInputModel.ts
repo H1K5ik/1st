@@ -9,5 +9,5 @@ export type UpdateVideoInputModel = {
     publicationDate: string
 }
 export function UpdateVideoInputModelOk(title: string, author: string, minAgeRestriction: number){
-    return title.length <= 40 && author.length <= 20 && minAgeRestriction >= 1 && minAgeRestriction <= 18 && true && author != 'null' && author != '' && title != 'null' && title != '';
+    return title.length <= 40 && author.length <= 20 && minAgeRestriction >= 1 && minAgeRestriction <= 18 && true  && author != ''  && title != '';
 }

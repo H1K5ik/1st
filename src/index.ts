@@ -27,8 +27,7 @@ type dbVideoType = {
     publicationDate?: string,
     availableResolutions?: availableResolutionsType
 }
-const defDate = new Date();
-defDate.setDate((defDate.getDate() + 1));
+
 let defaultVideo: dbVideoType[] = [
     {
         id: 1,
@@ -37,7 +36,7 @@ let defaultVideo: dbVideoType[] = [
         canBeDownloaded: false,
         minAgeRestriction: null,
         createdAt: new Date().toISOString(),
-        publicationDate: defDate.toISOString(),
+        publicationDate: new Date().toISOString(),
         availableResolutions: availableResolutionsType.P144
     }
 ];
@@ -91,7 +90,7 @@ app.post('/videos', (req: RequestsWithBody<CreateVideoInputModel>, res: Response
         canBeDownloaded: false,
         minAgeRestriction: null,
         createdAt: new Date().toISOString(),
-        publicationDate: defDate.toISOString(),
+        publicationDate: new Date().toISOString(),
         availableResolutions: req.body.availableResolutions
     }
     defaultVideo.push(video)

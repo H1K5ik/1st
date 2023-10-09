@@ -94,7 +94,7 @@ app.post('/videos', (req: Request, res: Response) => {
         })
     }
 
-    for(let i = 0;i<arrayOfAvRes.length; i++){
+    for(let i = 0;i<availableResolutions.length; i++){
         let res = req.body.availableResolutions;
         if(!res && !res.trim() && !(arrayOfAvRes[i]===res)){
             errorsMessages.push({
@@ -153,7 +153,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         })
     }
 
-    for(let i = 0;i<arrayOfAvRes.length; i++){
+    for(let i = 0;i<availableResolutions.length; i++){
         if(!availableResolutions || !availableResolutions.trim() || !(arrayOfAvRes[i]===availableResolutions)){
             errorsMessages.push({
                 message: "Incorrect title",

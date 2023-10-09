@@ -1,6 +1,4 @@
 import express, {Request, Response} from 'express'
-import {CreateVideoInputModel} from "./models/CreateVideoInputModel";
-import {RequestsWithBody, RequestsWithParams} from "./types/types";
 import {UpdateVideoInputModelOk} from "./models/UpdateVideoInputModel";
 
 export const app = express()
@@ -28,19 +26,23 @@ type dbVideoType = {
     publicationDate?: string,
     availableResolutions?: availableResolutionsType
 }
-
+const currentDate = new Date();
+currentDate.setDate(currentDate.getDate() + 1);
+const tomorrowISOString = currentDate.toISOString();
+console.log(tomorrowISOString);
 let defaultVideo: dbVideoType[] = [
     {
         id: 1,
         title: 'asdasdasddasas',
-        author: 'Gabeasdsllf',
+        author: 'Gabeasdssllasdasdsdaf',
         canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt: new Date().toISOString(),
-        publicationDate: new Date().toISOString(),
+        createdAt:currentDate.toISOString(),
+        publicationDate: tomorrowISOString,
         availableResolutions: availableResolutionsType.P144
     }
 ];
+
 export const HTTP_STATUSES = {
     OK_200: 200,
     CREATED_201: 201,

@@ -129,7 +129,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
     res.sendStatus(HTTP_STATUSES.NO_CONTENT_204)
 })
 app.delete('/videos/:id', (req: Request, res: Response) => {
-    const gg = defaultVideo.find(c => c.id === +req.params.id)
+    const gg = defaultVideo.find(c => c.id !== +req.params.id)
     if (!gg) {
         res.sendStatus(HTTP_STATUSES.NOT_FOUND_404)
         return

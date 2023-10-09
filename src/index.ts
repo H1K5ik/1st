@@ -200,7 +200,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
     if (!can || typeof can !== 'boolean') {
         errorsMessages.push({
             message: "Incorrect title",
-            field: "can"
+            field: "canBeDownloaded"
         })
     }
     //TODO: validate availableResolutions

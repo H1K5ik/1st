@@ -83,7 +83,7 @@ exports.app.post('/videos', (req, res) => {
             if (typeof availableResolution[m] !== 'string') {
                 errorsMessages.push({
                     message: "Incorrect title",
-                    field: `availableResolutions ${availableResolution[m]}`
+                    field: `availableResolutions`
                 });
             }
             if (arrayOfAvRes[i] === availableResolution[m]) {
@@ -94,7 +94,7 @@ exports.app.post('/videos', (req, res) => {
     if (c < availableResolution.length) {
         errorsMessages.push({
             message: "Incorrect title",
-            field: `availableResolutions is Invalid`
+            field: `availableResolutions`
         });
     }
     //TODO: validate availableResolution
@@ -156,7 +156,7 @@ exports.app.put('/videos/:id', (req, res) => {
             if (typeof availableResolution[m] !== 'string') {
                 errorsMessages.push({
                     message: "Incorrect title",
-                    field: `availableResolutions ${availableResolution[m]}`
+                    field: `availableResolutions`
                 });
             }
             if (arrayOfAvRes[i] === availableResolution[m]) {
@@ -167,7 +167,7 @@ exports.app.put('/videos/:id', (req, res) => {
     if (c < availableResolution.length) {
         errorsMessages.push({
             message: "Incorrect title",
-            field: `availableResolutions is Invalid`
+            field: `availableResolutions`
         });
     }
     if (!age || typeof age !== 'number' || !(age >= 1) || !(age <= 18)) {
@@ -179,7 +179,7 @@ exports.app.put('/videos/:id', (req, res) => {
     if (!can || typeof can !== 'boolean') {
         errorsMessages.push({
             message: "Incorrect title",
-            field: "can"
+            field: "canBeDownloaded"
         });
     }
     //TODO: validate availableResolutions

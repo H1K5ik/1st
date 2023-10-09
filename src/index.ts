@@ -30,6 +30,10 @@ const currentDate = new Date();
 currentDate.setDate(currentDate.getDate() + 1);
 const tomorrowISOString = currentDate.toISOString();
 console.log(tomorrowISOString);
+function addDays(date:Date, n:number){
+    date.setDate(date.getDate() + n);
+    return date
+}
 let defaultVideo: dbVideoType[] = [
     {
         id: 1,
@@ -38,7 +42,7 @@ let defaultVideo: dbVideoType[] = [
         canBeDownloaded: false,
         minAgeRestriction: null,
         createdAt :new Date().toISOString(),
-        publicationDate: currentDate.toISOString(),
+        publicationDate: addDays(new Date(), 1).toISOString(),
         availableResolutions: availableResolutionsType.P144
     }
 ];

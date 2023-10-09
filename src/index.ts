@@ -31,8 +31,8 @@ type dbVideoType = {
 let defaultVideo: dbVideoType[] = [
     {
         id: 1,
-        title: 'asdasdas',
-        author: 'Gabesllf',
+        title: 'asdasdasddasas',
+        author: 'Gabeasdsllf',
         canBeDownloaded: false,
         minAgeRestriction: null,
         createdAt: new Date().toISOString(),
